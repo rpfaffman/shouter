@@ -1,0 +1,39 @@
+to start the brew demon:
+brew services start postgresql
+
+to start demon:
+pg_ctl -D pg -l logfile start
+
+to create server:
+initdb pg
+
+to start server:
+pg_ctl -D pg -l logfile start
+
+to create database:
+createdb shouter
+
+then, run `lein repl`:
+user=> (require '[clojure.java.jdbc :as sql])
+nil
+
+; create a table:
+user=> (sql/db-do-commands "postgresql://localhost:5432/shouter"
+                           (sql/create-table-ddl :testing [[:data :text]]))
+(0)
+
+; insert some data:
+(sql/insert! "postgresql://localhost:5432/shouter"
+                    :testing {:data "Hel(sql/insert! "postgresql://localhost:5432/shouter"
+                    :testing {:data "Hello World"})
+({:data "Hello World"})
+
+
+; ask the database for the data back
+(sql/query "postgresql://localhost:5432/shouter"
+                  ["select * from testing"])
+({:data "Hello World"})
+
+; excellent, the data is retrievable. Drop the table so it'sn ot hanging around for later:
+(sql/db-do-commands "postgresql://localhost:5432/shouter"
+                    "drop table testing")

@@ -1,0 +1,4 @@
+To test if the application runs successfully:
+
+$ lein uberjar
+$ java $JVM_OPTS -jar target/shouter-standalone.jar
